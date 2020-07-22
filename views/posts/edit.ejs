@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<div class="container col-lg-8">
+    <div class="card">
+        <h5 class="card-header">
+            Edit post
+        </h5>
+        <div class="card-body">
+            <form  action="/posts/<%= post._id  %>?_method=PUT" method="POST">
+                <div class="form-group">
+                    <textarea name="post[description]" id="desc" rows="6" cols="40" class="form-control" style="border:none;"><%=post.description  %> </textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+      </div>
+
+</div>
+<%- include('../partials/footer') %>

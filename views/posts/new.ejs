@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<div class="container">
+<h1>Add new campgrounds</h1>
+<form method="POST" action="/posts" >
+    <div class="form-group">
+        <label for="exampleInputEmail1">Name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="name" required autofocus>
+
+    </div>
+    <div class="form-group">
+        <label for="desc">Description</label>
+        <textarea name="desc" id="desc" class="form-control" required></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add</button>
+</form>
+</div>
+<%- include('../partials/footer') %>

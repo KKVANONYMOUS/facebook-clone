@@ -1,0 +1,149 @@
+<%- include('../partials/header') %>
+<center>
+    <div>
+        <div class="col-md-5 col-12 col-sm-4 col-lg-5 ">
+            <div class="p-2 mb-2">
+                <div class="card">
+                    <h5 class="card-header text-left">Create post</h5>
+                    <div class="card-body">
+                        <div class="card-text text-muted create_post" data-toggle="modal" data-target="#staticBackdrop">
+                            What's on your mind,
+                            <%=currentUser.username  %>? </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+        <% posts.forEach((post)=>{  %>
+        <% let x=0; %>
+        <% post.comments.forEach((comment)=>{  %>
+        <% x++; %>
+        <% }) %>
+        <div class="col-md-5 col-12 col-sm-4 col-lg-5 ">
+            <div class="card mb-2">
+                <div class="card-body text-left">
+                    <div class="row col-12">
+                        <h5 class="card-title "><%=post.author.username  %> </h5>
+                        <small class="text-muted ml-auto"><%=post.created.toDateString() %> </small>
+                        <div class="dropdown">
+                            <a class="btn" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img src="/assets/ellipsis.png" height="20px">
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a href="/posts/<%=post._id  %>/edit" class="dropdown-item text-left">Edit</a>
+                                <form class="dropdown-item" action="/posts/<%= post._id  %>?_method=DELETE"
+                                    method="POST">
+                                    <button type="submit" class="btn text-left">Delete</button>
+                                </form>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <p class="card-text"><%= post.description %></p>
+
+                    <hr class="mb-1">
+                    <div class="row col-12">
+                        <a href="#"><img src="/assets/like.png" height="20px" onclick="changeicon(this)"
+                                id="like_icon<%=post._id%>"></a>Like
+                        <a class="ml-auto" data-toggle="collapse" href="#post<%=post._id  %>" role="button"
+                            aria-expanded="false" aria-controls="collapseExample"><%=x %> Comments</a>
+                    </div>
+                    <hr class="mt-1">
+                    <div class="collapse" id="post<%=post._id  %>">
+                        <div class="card-body comment_section">
+                            <% post.comments.forEach((comment)=>{ %>
+                            <div class="row col-md-12">
+                                <div class="font-weight-bold"><%=comment.author.username  %></div>
+                                <small class="ml-auto text-secondary"><%=comment.created.toDateString()  %></small>
+                            </div>
+                            <div class="row col-12">
+                                <p><%=comment.text  %> </p>
+                                <% if (currentUser && comment.author.id.equals(currentUser._id)) {%>
+                                <div class="dropdown ml-auto">
+                                    <a class="btn" href="#" role="button" id="dropdownMenuLink"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                        <img src="/assets/ellipsis.png" height="20px">
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a href="/posts/<%=post._id%>/comments/<%=comment._id %>/edit"
+                                            class="dropdown-item text-left">Edit</a>
+                                        <form class="dropdown-item"
+                                            action="/posts/<%=post._id%>/comments/<%=comment._id %>?_method=DELETE"
+                                            method="POST">
+                                            <button type="submit" class="btn text-left">Delete</button>
+                                        </form>
+
+
+                                    </div>
+
+                                </div>
+                                <% }%>
+                            </div>
+
+                            <% }) %>
+                        </div>
+                    </div>
+                    <% let flag=0;
+                    post.comments.forEach((comment)=>{
+                        if (currentUser && currentUser.username==comment.author.username){
+                            flag=1;
+                            
+                        }
+                    })
+                    
+                 %>
+                    <% if (flag==0){ %>
+                    <div>
+                        <form method="POST" action="/posts/<%= post._id  %>/comments ">
+
+                            <div class="form-group">
+                                <input name="comment[text]" id="desc" class="comment_section"
+                                    placeholder="Write a comment..." required>
+                                <p class="small">Press Enter to post</p>
+                            </div>
+                        </form>
+                    </div>
+                    <% } %>
+                    <a href="/posts/<%= post._id  %>"><button class="btn btn-warning" style="width:100%;">View
+                            more</button></a>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</center>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Create post</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="/posts">
+                    <div class="form-group">
+                        <textarea name="desc" id="desc" class="form-control" rows="6" cols="50"
+                            placeholder="What's on your mind, <%=currentUser.username  %>?" required></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>
