@@ -11,24 +11,34 @@ route.get("/", (req, res) => {
 })
 
 //PROFILE ROUTE
-route.get("/profile", middleWare.isLoggedIn, (req, res) => {
+route.get("/profile/:id",middleWare.isLoggedIn, (req, res) => {
+    let user_id=req.params.id;
     post.find({}).populate("comments").exec((err, posts) => {
         if (err) {
             console.log("error occured")
         } else {
-            res.render('user/profile', {
-                posts: posts
-
+            user.findById(user_id,(err,user)=>{
+                if (err || !user){
+                    req.flash('error', 'User not found')
+                    res.redirect("/posts");
+                }
+                else{
+                    res.render('user/profile', {
+                        posts: posts,
+                        user:user
+                    })
+                }
             })
+            
         }
     })
 })
 
 //PROFILE EDIT ROUTE
-route.get("/profile/:id/edit", middleWare.isLoggedIn, (req, res) => {
+route.get("/profile/:id/edit", middleWare.checkLoggedInUser, (req, res) => {
     user.findById(req.params.id, (err, user) => {
         if (err) {
-            res.redirect("/profile")
+            res.redirect("back")
         } else {
             res.render("user/edit", {
                 user: user
@@ -37,7 +47,7 @@ route.get("/profile/:id/edit", middleWare.isLoggedIn, (req, res) => {
     })
 })
 //PROFILE EDIT PUT
-route.put("/profile/:id", middleWare.isLoggedIn, (req, res) => {
+route.put("/profile/:id",middleWare.checkLoggedInUser, (req, res) => {
     let firstname = req.body.firstname
     let lastname = req.body.lastname
     let bio = req.body.bio
@@ -59,7 +69,7 @@ route.put("/profile/:id", middleWare.isLoggedIn, (req, res) => {
             res.redirect("/profile")
         } else {
             req.flash('success', 'Profile updated successfully')
-            res.redirect("/profile")
+            res.redirect("/profile/"+req.params.id)
         }
     })
 

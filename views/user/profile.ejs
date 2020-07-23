@@ -1,8 +1,8 @@
 <%- include('../partials/header') %>
 <div class="container col-lg-8 ">
     <div class="text-center">
-    <h3 ><%=currentUser.firstname  %> <%= currentUser.lastname %> </h3>
-    <a href="/profile/<%=currentUser._id  %>/edit" class="text-dark"><%=currentUser.bio  %> </a>
+    <h3 ><%=user.firstname  %> <%= user.lastname %> </h3>
+    <p class="text-dark"><%=user.bio  %> </p>
 </div>
     <hr>
     
@@ -15,17 +15,19 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><i class="fa fa-map-marker fa-lg" aria-hidden="true"></i> <span
-                            class="ml-2"><%= currentUser.hometown  %> </span></li>
+                            class="ml-2"><%= user.hometown  %> </span></li>
                     <li class="list-group-item"><i class="fa fa-briefcase fa-lg" aria-hidden="true"></i> <span
-                            class="ml-2"> <%= currentUser.workplace  %></span> </li>
+                            class="ml-2"> <%= user.workplace  %></span> </li>
                     <li class="list-group-item"><i class="fa fa-book fa-lg" aria-hidden="true"></i> <span class="ml-2">
-                            <%= currentUser.education  %></span> </li>
+                            <%= user.education  %></span> </li>
                     <li class="list-group-item"><i class="fa fa-phone fa-lg" aria-hidden="true"></i><span class="ml-2">
-                            <%= currentUser.contact  %> </span></li>
+                            <%= user.contact  %> </span></li>
                 </ul>
+                <% if (currentUser && currentUser.username==user.username) {%> 
                 <div class="card-body text-center">
-                    <a href="/profile/<%=currentUser._id  %>/edit" class="btn btn-secondary btn-block">Edit Profile</a><br>
+                    <a href="/profile/<%=user._id  %>/edit" class="btn btn-secondary btn-block">Edit Profile</a><br>
                 </div>
+            <% } %> 
             </div>
         </div>
         <div class="col-md-7">
@@ -35,7 +37,7 @@
                         <h5 class="card-title text-left">Create post</h5>
                         <div class="card-text text-muted create_post" data-toggle="modal" data-target="#newpost2">
                             What's on your mind,
-                            <%=currentUser.username  %>? </div>
+                            <%=user.username  %>? </div>
                     </div>
                 </div>
             </div>
@@ -48,7 +50,7 @@
             </div>
             <div>
                 <%  posts.forEach((post)=>{  %>
-                <% if (post.author.username==currentUser.username){ %>
+                <% if (post.author.username==user.username){ %>
                 <% let x=0; %>
                 <% post.comments.forEach((comment)=>{  %>
                 <% x++; %>
@@ -95,7 +97,7 @@
                                 </div>
                                 <div class="row col-12">
                                     <p><%=comment.text  %> </p>
-                                    <% if (currentUser && comment.author.id.equals(currentUser._id)) {%>
+                                    <% if (comment.author.id.equals(user._id)) {%>
                                     <div class="dropdown ml-auto">
                                         <a class="btn" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -122,7 +124,7 @@
                         </div>
                         <% let flag=0;
                             post.comments.forEach((comment)=>{
-                                if (currentUser && currentUser.username==comment.author.username){
+                                if ( user.username==comment.author.username){
                                     flag=1;
                                     
                                 }

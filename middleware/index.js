@@ -1,8 +1,9 @@
 let post = require("../models/posts"),
-    comment = require("../models/comments")
+    comment = require("../models/comments"),
+    user = require('../models/user')
 
 middlewareObj = {}
-//checkCampgroundOwnership middleware
+//checkPostOwnership middleware
 middlewareObj.checkPostOwnership = (req, res, next) => {
     if (req.isAuthenticated()) {
         post.findById(req.params.id, (err, post) => {
@@ -23,12 +24,33 @@ middlewareObj.checkPostOwnership = (req, res, next) => {
         res.redirect("back")
     }
 }
-
-//checkCampgroundOwnership middleware
+//check the current loggedIn user
+middlewareObj.checkLoggedInUser = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        user.findById(req.params.id, (err, user) => {
+            if (err || !user) {
+                req.flash('error', 'User not found')
+                res.redirect("/profile/"+req.user._id)
+            } else {
+                
+                if (user._id.equals(req.user._id)) {
+                   next()
+                } else {
+                    req.flash('error', 'Permission denied')
+                    res.redirect("/profile/"+req.user._id)
+                }
+            }
+        })
+    } else {
+        req.flash('error', 'Please Login first!')
+        res.redirect("/login")
+    }
+}
+//checkCommentOwnership middleware
 middlewareObj.checkCommentOwnership = (req, res, next) => {
     if (req.isAuthenticated()) {
         comment.findById(req.params.comment_id, (err, comment) => {
-            if (err  || !comment) {
+            if (err || !comment) {
                 req.flash('error', 'Comment not found')
                 res.redirect("back")
             } else {
@@ -45,6 +67,7 @@ middlewareObj.checkCommentOwnership = (req, res, next) => {
         res.redirect("back")
     }
 }
+
 
 //isLoggedIn middleware
 middlewareObj.isLoggedIn = (req, res, next) => {
