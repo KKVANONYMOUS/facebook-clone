@@ -17,4 +17,4 @@ const facebook = new mongoose.Schema({
         username: String
     }
 });
-module.exports = mongoose.model('campground', facebook);
+module.exports = mongoose.model('post', facebook);

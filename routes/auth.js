@@ -2,12 +2,68 @@ let express = require("express"),
     route = express.Router(),
     user = require('../models/user'),
     passport = require('passport'),
-    middleWare=require("../middleware")
+    post = require("../models/posts"),
+    middleWare = require("../middleware")
 
+//DEFAULT ROUTE    
 route.get("/", (req, res) => {
     res.redirect("/login")
 })
 
+//PROFILE ROUTE
+route.get("/profile", middleWare.isLoggedIn, (req, res) => {
+    post.find({}).populate("comments").exec((err, posts) => {
+        if (err) {
+            console.log("error occured")
+        } else {
+            res.render('user/profile', {
+                posts: posts
+
+            })
+        }
+    })
+})
+
+//PROFILE EDIT ROUTE
+route.get("/profile/:id/edit", middleWare.isLoggedIn, (req, res) => {
+    user.findById(req.params.id, (err, user) => {
+        if (err) {
+            res.redirect("/profile")
+        } else {
+            res.render("user/edit", {
+                user: user
+            })
+        }
+    })
+})
+//PROFILE EDIT PUT
+route.put("/profile/:id", middleWare.isLoggedIn, (req, res) => {
+    let firstname = req.body.firstname
+    let lastname = req.body.lastname
+    let bio = req.body.bio
+    let hometown = req.body.hometown
+    let workplace = req.body.workplace
+    let education = req.body.education
+    let contact = req.body.contact
+    user.findByIdAndUpdate(req.params.id, {
+        firstname: firstname,
+        lastname: lastname,
+        bio: bio,
+        hometown:hometown,
+        workplace:workplace,
+        education:education,
+        contact:contact
+    }, (err, post) => {
+        if (err) {
+            console.log(err)
+            res.redirect("/profile")
+        } else {
+            req.flash('success', 'Profile updated successfully')
+            res.redirect("/profile")
+        }
+    })
+
+})
 //REGISTER ROUTES
 route.get("/register", (req, res) => {
     res.render("register")
@@ -23,7 +79,7 @@ route.post("/register", (req, res) => {
             res.redirect("/register")
         } else {
             passport.authenticate("local")(req, res, () => {
-                req.flash('success', 'Welcome '+user.username + " to Facebook")
+                req.flash('success', 'Welcome ' + user.username + " to Facebook")
                 res.redirect('/posts')
             })
         }
@@ -43,7 +99,7 @@ route.post("/login", passport.authenticate("local", {
 //LOGOUT ROUTES
 route.get("/logout", (req, res) => {
     req.logOut()
-    req.flash("success","Successfully logged out!")
+    req.flash("success", "Successfully logged out!")
     res.redirect("/login")
 })
 

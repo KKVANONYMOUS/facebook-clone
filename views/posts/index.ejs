@@ -27,8 +27,8 @@
                         <h5 class="card-title "><%=post.author.username  %> </h5>
                         <small class="text-muted ml-auto"><%=post.created.toDateString() %> </small>
                         <div class="dropdown">
-                            <a class="btn" href="#" role="button" id="dropdownMenuLink"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
                                 <img src="/assets/ellipsis.png" height="20px">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -65,8 +65,8 @@
                                 <p><%=comment.text  %> </p>
                                 <% if (currentUser && comment.author.id.equals(currentUser._id)) {%>
                                 <div class="dropdown ml-auto">
-                                    <a class="btn" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                                    <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
                                         <img src="/assets/ellipsis.png" height="20px">
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -109,8 +109,7 @@
                         </form>
                     </div>
                     <% } %>
-                    <a href="/posts/<%= post._id  %>"><button class="btn btn-warning" style="width:100%;">View
-                            more</button></a>
+
                 </div>
             </div>
         </div>

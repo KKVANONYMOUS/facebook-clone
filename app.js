@@ -5,7 +5,6 @@ let express = require("express"),
   campground = require("./models/posts"),
   comment = require("./models/comments"),
   user = require('./models/user'),
-  seedDB = require("./seeds"),
   passport = require('passport'),
   localStrategy = require('passport-local'),
   postsRoutes = require('./routes/posts'),
@@ -51,7 +50,7 @@ app.use("/posts/:id/comments", commentsRoutes)
 app.use(authRoutes)
 
 
-// seedDB();
+
 
 app.listen(process.env.PORT || 3000, () => {
   console.log("Starting app at PORT:3000")

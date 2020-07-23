@@ -9,6 +9,7 @@ maximum-scale=1.0, user-scalable=no" />
     <!-- CSS only -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
@@ -27,38 +28,39 @@ maximum-scale=1.0, user-scalable=no" />
 
                 <% if (!currentUser){ %>
                 <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/register">SignUp </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login">Login</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">SignUp </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
                 </ul>
                 <%}else{ %>
-                    <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/posts" data-toggle="tooltip" data-placement="bottom" title="Home"> <img
-                            height="30px" src="/assets/browser.png"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom" title="Friends"> <img
-                            height="30px" src="/assets/group.png"></a>
-                </li>
-            </ul>
                 <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link user" href="/posts" data-toggle="tooltip" data-placement="bottom"
-                        title="<%=currentUser.username  %>"> <%= currentUser.username %></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link left_icons" href="/posts/new" data-toggle="tooltip" data-placement="bottom"
-                        title="Create Post"><img height="30px" src="/assets/add.png"></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link left_icons" href="/logout" data-toggle="tooltip" data-placement="bottom"
-                        title="Logout"><img height="30px" src="/assets/logout.png"></a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/posts" data-toggle="tooltip" data-placement="bottom" title="Home">
+                            <img height="30px" src="/assets/browser.png"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom" title="Friends"> <img
+                                height="30px" src="/assets/group.png"></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link user" href="/profile" data-toggle="tooltip" data-placement="bottom"
+                            title="<%=currentUser.username  %>"> <%= currentUser.username %></a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="nav-link left_icons hover" data-toggle="modal" data-target="#newpost"><img
+                                height="30px" src="/assets/add.png" data-toggle="tooltip" data-placement="bottom"
+                                title="Create Post"></div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link left_icons" href="/logout" data-toggle="tooltip" data-placement="bottom"
+                            title="Logout"><img height="30px" src="/assets/logout.png"></a>
+                    </li>
+                </ul>
                 <%} %>
 
 
@@ -79,4 +81,31 @@ maximum-scale=1.0, user-scalable=no" />
         </div>
         <% } %>
     </div>
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="newpost" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="newpostLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="newpostLabel">Create post</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/posts">
+                        <div class="form-group">
+                            <textarea name="desc" id="desc" class="form-control" rows="6" cols="50"
+                                placeholder="Create a post" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Post</button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
