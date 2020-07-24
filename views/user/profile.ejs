@@ -25,12 +25,13 @@
                 </ul>
                 <% if (currentUser && currentUser.username==user.username) {%> 
                 <div class="card-body text-center">
-                    <a href="/profile/<%=user._id  %>/edit" class="btn btn-secondary btn-block">Edit Profile</a><br>
+                    <a href="/profile/<%=user._id  %>/edit" class="btn btn-secondary btn-block"><i class="fa fa-pencil " aria-hidden="true"></i> Edit Profile </a><br>
                 </div>
             <% } %> 
             </div>
         </div>
         <div class="col-md-7">
+            <% if (currentUser && currentUser.username==user.username) {%>
             <div class="mb-2">
                 <div class="card" style="border-radius: 10px;">
                     <div class="card-body">
@@ -41,6 +42,7 @@
                     </div>
                 </div>
             </div>
+        <% }  %> 
             <div class="mb-2">
                 <div class="card" style="border-radius: 10px;">
                     <div class="card-body">
@@ -60,6 +62,7 @@
                         <div class="row col-12">
                             <h5 class="card-title "><%=post.author.username  %> </h5>
                             <small class="text-muted ml-auto"><%=post.created.toDateString() %> </small>
+                            <% if (currentUser && post.author.id.equals(currentUser._id)) {%>
                             <div class="dropdown">
                                 <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -76,6 +79,7 @@
                                 </div>
 
                             </div>
+                        <% } %> 
                         </div>
 
                         <p class="card-text"><%= post.description %></p>
@@ -97,7 +101,7 @@
                                 </div>
                                 <div class="row col-12">
                                     <p><%=comment.text  %> </p>
-                                    <% if (comment.author.id.equals(user._id)) {%>
+                                    <% if (comment.author.id.equals(currentUser._id)) {%>
                                     <div class="dropdown ml-auto">
                                         <a class="btn" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,7 +128,7 @@
                         </div>
                         <% let flag=0;
                             post.comments.forEach((comment)=>{
-                                if ( user.username==comment.author.username){
+                                if ( currentUser && comment.author.id.equals(currentUser._id)){
                                     flag=1;
                                     
                                 }

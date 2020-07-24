@@ -14,7 +14,7 @@ a:hover {
 }
 .navbar {
     border-bottom: 1px solid slategray;
-    background-color: #fff;
+    background-color: #3b5998;
 }
 
 .form-signin {
@@ -54,18 +54,18 @@ a:hover {
 
 .user {
     border: none;
-    color: black;
     padding: 10px 20px;
-    text-align: center;
     text-decoration: none;
     display: inline-block;
     margin: 4px 2px;
     cursor: pointer;
-    border-radius: 16px;
+    color: #fff!important;
     font-weight: bolder;
+    
 }
 
 .user:hover {
+    color: #000!important;
     background-color: #ddd;
 }
 
@@ -73,10 +73,18 @@ a:hover {
     margin: 5px;
     margin-right: 10px;
 }
-
-.left_icons:hover {
-    border-radius: 50%;
-    background-color: #ddd;
+.icons{
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    color: #fff!important;
+}
+.icons:hover {
+    background-color: #4267B2;
+    cursor: pointer;
 }
 
 .create_post {
@@ -97,7 +105,7 @@ a:hover {
     background-color:#ddd;
 }
 .card-title{
-    color: #3b5998;
+    color: #4267B2;
 }
 .comment_section{
     width: 100%;
@@ -112,7 +120,5 @@ a:hover {
     background-color: #f7f7f7;
 
 }
-.hover:hover{
-    cursor: pointer;
-}
+
 

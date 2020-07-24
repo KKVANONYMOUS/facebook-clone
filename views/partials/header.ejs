@@ -29,36 +29,36 @@ maximum-scale=1.0, user-scalable=no" />
                 <% if (!currentUser){ %>
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">SignUp </a>
+                        <a class="nav-link icons" href="/register">SignUp </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link icons" href="/login">Login</a>
                     </li>
                 </ul>
                 <%}else{ %>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/posts" data-toggle="tooltip" data-placement="bottom" title="Home">
-                            <img height="30px" src="/assets/browser.png"></a>
+                        <a class="nav-link icons" href="/posts" data-toggle="tooltip" data-placement="bottom"
+                            title="Home">
+                            Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" data-toggle="tooltip" data-placement="bottom" title="Friends"> <img
-                                height="30px" src="/assets/group.png"></a>
+                        <a class="nav-link icons" href="#" data-toggle="tooltip" data-placement="bottom"
+                            title="Find Friends">
+                            Find Friends</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link user" href="/profile/<%=currentUser._id  %> " data-toggle="tooltip" data-placement="bottom"
-                            title="<%=currentUser.username  %>"> <%= currentUser.username %></a>
+                        <a class="nav-link user" href="/profile/<%=currentUser._id  %> " data-toggle="tooltip"
+                            data-placement="bottom" title="Profile"> <%= currentUser.username %></a>
                     </li>
                     <li class="nav-item">
-                        <div class="nav-link left_icons hover" data-toggle="modal" data-target="#newpost"><img
-                                height="30px" src="/assets/add.png" data-toggle="tooltip" data-placement="bottom"
-                                title="Create Post"></div>
+                        <div class="nav-link icons" data-toggle="modal" data-target="#newpost">Create post</div>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link left_icons" href="/logout" data-toggle="tooltip" data-placement="bottom"
-                            title="Logout"><img height="30px" src="/assets/logout.png"></a>
+                        <a class="nav-link icons" href="/logout">Logout</a>
                     </li>
                 </ul>
                 <%} %>
