@@ -43,15 +43,21 @@
                             </div>
 
                         </div>
-                    <% } %> 
+                        <% } %>
                     </div>
 
                     <p class="card-text"><%= post.description %></p>
 
                     <hr class="mb-1">
                     <div class="row col-12">
-                        <a href="#"><img src="/assets/like.png" height="20px" onclick="changeicon(this)"
-                                id="like_icon<%=post._id%>"></a>Like
+                        <div class="row">
+                            <form action="/posts/<%=post._id%>/like?_method=PUT" method="POST">
+                                <button type="submit" class="btn">
+                                    <i class="fa fa-thumbs-up" id="like_icon<%=post._id%>" onclick="liked(this)"></i>
+                                </button>
+                            </form>
+                            <span><%=post.likes.length  %></span>
+                        </div>
                         <a class="ml-auto" data-toggle="collapse" href="#post<%=post._id  %>" role="button"
                             aria-expanded="false" aria-controls="collapseExample"><%=x %> Comments</a>
                     </div>

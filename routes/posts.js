@@ -6,6 +6,7 @@ let express = require("express"),
 
 //RESTful Routes
 
+//get routes for posts
 route.get("/",middleWare.isLoggedIn, (req, res) => {
     post.find({}).populate("comments").exec((err,posts)=>{
         if (err) {
@@ -63,7 +64,7 @@ route.get("/new", middleWare.isLoggedIn, (req, res) => {
 //     })
 // })
 
-//edit posts route
+//get route for edit posts
 route.get("/:id/edit", middleWare.checkPostOwnership, (req, res) => {
     post.findById(req.params.id, (err, post) => {
         if (err) {
@@ -76,7 +77,7 @@ route.get("/:id/edit", middleWare.checkPostOwnership, (req, res) => {
     })
 
 })
-//update route
+//put route for edit posts
 route.put("/:id", middleWare.checkPostOwnership, (req, res) => {
     post.findByIdAndUpdate(req.params.id, req.body.post, (err, post) => {
         if (err) {

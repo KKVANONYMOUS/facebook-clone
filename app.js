@@ -2,13 +2,13 @@ let express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   mongoose = require('mongoose'),
-  campground = require("./models/posts"),
-  comment = require("./models/comments"),
   user = require('./models/user'),
   passport = require('passport'),
   localStrategy = require('passport-local'),
   postsRoutes = require('./routes/posts'),
   commentsRoutes = require('./routes/comments'),
+  profileRoutes = require('./routes/profile'),
+  likeRoutes = require('./routes/like'),
   authRoutes = require('./routes/auth'),
   methodOverride = require("method-override"),
   flash = require("connect-flash")
@@ -48,8 +48,8 @@ app.use(methodOverride("_method"))
 app.use("/posts", postsRoutes)
 app.use("/posts/:id/comments", commentsRoutes)
 app.use(authRoutes)
-
-
+app.use("/profile/:id",profileRoutes)
+app.use(likeRoutes)
 
 
 app.listen(process.env.PORT || 3000, () => {
