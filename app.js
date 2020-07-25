@@ -9,6 +9,7 @@ let express = require("express"),
   commentsRoutes = require('./routes/comments'),
   profileRoutes = require('./routes/profile'),
   likeRoutes = require('./routes/like'),
+  friendsRoutes = require('./routes/friends'),
   authRoutes = require('./routes/auth'),
   methodOverride = require("method-override"),
   flash = require("connect-flash")
@@ -50,6 +51,7 @@ app.use("/posts/:id/comments", commentsRoutes)
 app.use(authRoutes)
 app.use("/profile/:id",profileRoutes)
 app.use(likeRoutes)
+app.use(friendsRoutes)
 
 
 app.listen(process.env.PORT || 3000, () => {

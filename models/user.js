@@ -31,7 +31,9 @@ let UserSchema = new mongoose.Schema({
         type: Number,
         default: 999999999
       },
-    password: String
+    password: String,
+    friends:[{type:String}],
+    friend_requests:[{type:String}]
 })
 
 UserSchema.plugin(passportlocalmongoose)
