@@ -47,7 +47,7 @@
                     <div class="row col-12">
                         <div class="row">
                             <form action="/posts/<%=post._id%>/like?_method=PUT" method="POST">
-                                <% if (post.likes.find(o => o==currentUser._id)){ %>
+                                <% if (post.likes.find(event => event==currentUser._id)){ %>
                                 <button type="submit" class="no_outline" type="button">
                                     <img src="/assets/like-1.png" height="20px"><span class="ml-1"><%=post.likes.length  %></span>
                                 </button>

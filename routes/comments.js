@@ -6,20 +6,7 @@ let express = require("express"),
     comment = require("../models/comments"),
     middleWare=require("../middleware")
 
-//get route
-// route.get("/new", middleWare.isLoggedIn, (req, res) => {
-//     post.findById(req.params.id, (err, post) => {
-//         if (err) {
-//             console.log(err)
-//         } else {
-//             res.render("comments/new", {
-//                 post: post
-//             })
-//         }
-//     })
-
-// })
-
+//POST ROUTE FOR CREATING NEW COMMENT
 route.post("/", middleWare.isLoggedIn, (req, res) => {
     post.findById(req.params.id, (err, post) => {
         if (err) {
@@ -44,6 +31,8 @@ route.post("/", middleWare.isLoggedIn, (req, res) => {
         }
     })
 })
+
+//GET ROUTE FOR EDITING COMMENT
 route.get("/:comment_id/edit",middleWare.checkCommentOwnership,(req,res)=>{
     post.findById(req.params.id, (err, post) => {
         if (err || !post) {
@@ -66,7 +55,8 @@ route.get("/:comment_id/edit",middleWare.checkCommentOwnership,(req,res)=>{
         }
     })
 })
-//put route for updating comment
+
+//PUT ROUTE FOR EDITING COMMENT
 route.put("/:comment_id",middleWare.checkCommentOwnership,(req,res)=>{
     comment.findByIdAndUpdate(req.params.comment_id,req.body.comment,(err,comment)=>{
         if (err){
@@ -79,7 +69,7 @@ route.put("/:comment_id",middleWare.checkCommentOwnership,(req,res)=>{
     })
 })
 
-//delete comment route
+//DELETE COMMENT ROUTE
 route.delete("/:comment_id",middleWare.checkCommentOwnership,(req,res)=>{
     comment.findByIdAndDelete(req.params.comment_id,(err,comment)=>{
         if (err) {
@@ -90,7 +80,5 @@ route.delete("/:comment_id",middleWare.checkCommentOwnership,(req,res)=>{
         }
     })
 })
-
-
 
 module.exports = route

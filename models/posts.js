@@ -1,5 +1,5 @@
 let mongoose = require('mongoose')
-const facebook = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
     description: String,
     created: {
         type: Date,
@@ -18,4 +18,4 @@ const facebook = new mongoose.Schema({
     },
     likes:[{type:String}]
 });
-module.exports = mongoose.model('post', facebook);
+module.exports = mongoose.model('post', postSchema);

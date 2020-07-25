@@ -6,7 +6,7 @@ let express = require("express"),
     post = require("../models/posts"),
     middleWare = require("../middleware")
 
-//PROFILE ROUTE
+//GET ROUTE FOR PROFILE
 route.get("/", middleWare.isLoggedIn, (req, res) => {
     let user_id = req.params.id;
     post.find({}).populate("comments").exec((err, posts) => {
@@ -29,7 +29,7 @@ route.get("/", middleWare.isLoggedIn, (req, res) => {
     })
 })
 
-//PROFILE EDIT GET
+//GET ROUTE FOR EDITING PROFILE
 route.get("/edit", middleWare.checkLoggedInUser, (req, res) => {
     user.findById(req.params.id, (err, user) => {
         if (err) {
@@ -41,7 +41,8 @@ route.get("/edit", middleWare.checkLoggedInUser, (req, res) => {
         }
     })
 })
-//PROFILE EDIT PUT
+
+//PUT ROUTE FOR EDITING PROFILE
 route.put("/", middleWare.checkLoggedInUser, (req, res) => {
     let firstname = req.body.firstname
     let lastname = req.body.lastname

@@ -1,12 +1,9 @@
 let express = require("express"),
     route = express.Router(),
     post = require("../models/posts"),
-    middleWare=require("../middleware")//no need for writing index.js as it will require it itself due to its name which is index.js
+    middleWare=require("../middleware")
 
-
-//RESTful Routes
-
-//get routes for posts
+//GET ROUTES FOR INDEX POSTS
 route.get("/",middleWare.isLoggedIn, (req, res) => {
     post.find({}).populate("comments").exec((err,posts)=>{
         if (err) {
@@ -20,8 +17,7 @@ route.get("/",middleWare.isLoggedIn, (req, res) => {
     })
 })
 
-
-//post route for new posts
+//POST ROUTE FOR NEW POSTS
 route.post("/", middleWare.isLoggedIn, (req, res) => {
     let name = req.body.name;
     let img = req.body.img;
@@ -45,26 +41,12 @@ route.post("/", middleWare.isLoggedIn, (req, res) => {
 
 })
 
-//get route for new posts
+//GET ROUTE FOR NEW POSTS
 route.get("/new", middleWare.isLoggedIn, (req, res) => {
     res.render('posts/new')
 })
 
-//show 
-// route.get("/:id", (req, res) => {
-
-//     post.findById(req.params.id).populate("comments").exec((err, post) => {
-//         if (err) {
-//             console.log("error")
-//         } else {
-//             res.render("posts/show", {
-//                 post: post
-//             })
-//         }
-//     })
-// })
-
-//get route for edit posts
+//GET ROUTE FOR EDITING POSTS
 route.get("/:id/edit", middleWare.checkPostOwnership, (req, res) => {
     post.findById(req.params.id, (err, post) => {
         if (err) {
@@ -77,7 +59,8 @@ route.get("/:id/edit", middleWare.checkPostOwnership, (req, res) => {
     })
 
 })
-//put route for edit posts
+
+//PUT ROUTE FOR EDITING POSTS
 route.put("/:id", middleWare.checkPostOwnership, (req, res) => {
     post.findByIdAndUpdate(req.params.id, req.body.post, (err, post) => {
         if (err) {
@@ -91,7 +74,7 @@ route.put("/:id", middleWare.checkPostOwnership, (req, res) => {
 
 })
 
-//delete route for deleting posts
+//DELETE ROUTE FOR DELETING POSTS
 route.delete("/:id", middleWare.checkPostOwnership, (req, res) => {
     post.findByIdAndDelete(req.params.id, (err, post) => {
         if (err) {

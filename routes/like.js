@@ -3,22 +3,18 @@ let express = require("express"),
     post = require("../models/posts"),
     middleWare = require("../middleware")
 
-route.put("/posts/:id/like", (req, res) => {
+//PUT ROUTE FOR UPDATING POST LIKES
+route.put("/posts/:id/like", middleWare.isLoggedIn, (req, res) => {
     post.findById(req.params.id, (err, postupdate) => {
         if (err) {
-            console.log(err)
+            req.flash("error", "Post not found")
             res.redirect("/posts")
         } else {
-            let flag = 0;
-            postupdate.likes.forEach((like) => {
-                if (like == req.user._id) {
-                    flag = 1;
-                }
-            })
             //for new likes
-            if (flag == 0) {
+            if (postupdate.likes.find(event => event == req.user._id)) {
+                let updatedlikes = postupdate.likes.filter((val => val != req.user._id));
                 post.findByIdAndUpdate(postupdate._id, {
-                    likes: postupdate.likes.concat([req.user._id])
+                    likes: updatedlikes
                 }, (err, like) => {
                     if (err) {
                         console.log(err)
@@ -27,12 +23,12 @@ route.put("/posts/:id/like", (req, res) => {
                         res.redirect("back")
                     }
                 })
+
             }
             //for existing like
-            else{
-                let updatedlikes = postupdate.likes.filter((val => val != req.user._id));
+            else {
                 post.findByIdAndUpdate(postupdate._id, {
-                    likes: updatedlikes
+                    likes: postupdate.likes.concat([req.user._id])
                 }, (err, like) => {
                     if (err) {
                         console.log(err)
