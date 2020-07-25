@@ -16,10 +16,6 @@
             </div>
         </div>
         <% posts.forEach((post)=>{  %>
-        <% let x=0; %>
-        <% post.comments.forEach((comment)=>{  %>
-        <% x++; %>
-        <% }) %>
         <div class="col-md-5 col-12 col-sm-4 col-lg-5 ">
             <div class="card mb-2">
                 <div class="card-body text-left">
@@ -28,7 +24,7 @@
                         <small class="text-muted ml-auto"><%=post.created.toDateString() %> </small>
                         <% if (currentUser && post.author.id.equals(currentUser._id)) {%>
                         <div class="dropdown">
-                            <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                            <a class="no_outline" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <img src="/assets/ellipsis.png" height="20px">
                             </a>
@@ -36,9 +32,8 @@
                                 <a href="/posts/<%=post._id  %>/edit" class="dropdown-item text-left">Edit</a>
                                 <form class="dropdown-item" action="/posts/<%= post._id  %>?_method=DELETE"
                                     method="POST">
-                                    <button type="submit" class="btn text-left">Delete</button>
+                                    <button type="submit" class="no_outline">Delete</button>
                                 </form>
-
 
                             </div>
 
@@ -52,17 +47,28 @@
                     <div class="row col-12">
                         <div class="row">
                             <form action="/posts/<%=post._id%>/like?_method=PUT" method="POST">
-                                <button type="submit" class="btn">
-                                    <i class="fa fa-thumbs-up" id="like_icon<%=post._id%>" onclick="liked(this)"></i>
+                                <% if (post.likes.find(o => o==currentUser._id)){ %>
+                                <button type="submit" class="no_outline" type="button">
+                                    <img src="/assets/like-1.png" height="20px"><span class="ml-1"><%=post.likes.length  %></span>
                                 </button>
+                                <% } else{ %>
+                                <button type="submit" class="no_outline" type="button">
+                                    <img src="/assets/like.png" height="20px"><span class="ml-1"><%=post.likes.length  %></span>
+                                </button>
+                                <% } %>
                             </form>
-                            <span><%=post.likes.length  %></span>
+                            
                         </div>
                         <a class="ml-auto" data-toggle="collapse" href="#post<%=post._id  %>" role="button"
-                            aria-expanded="false" aria-controls="collapseExample"><%=x %> Comments</a>
+                            aria-expanded="false" aria-controls="collapseExample"><%=post.comments.length %> Comments</a>
                     </div>
                     <hr class="mt-1">
                     <div class="collapse" id="post<%=post._id  %>">
+                        <% if (post.comments.length==0){ %> 
+                            <div class="card-body comment_section">
+                                <p class="card-text text-center text-dark">No comments yet :(</p>
+                            </div>
+                        <% } else { %> 
                         <div class="card-body comment_section">
                             <% post.comments.forEach((comment)=>{ %>
                             <div class="row col-md-12">
@@ -73,7 +79,7 @@
                                 <p><%=comment.text  %> </p>
                                 <% if (currentUser && comment.author.id.equals(currentUser._id)) {%>
                                 <div class="dropdown ml-auto">
-                                    <a class="btn" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                    <a class="no_outline" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <img src="/assets/ellipsis.png" height="20px">
                                     </a>
@@ -83,7 +89,7 @@
                                         <form class="dropdown-item"
                                             action="/posts/<%=post._id%>/comments/<%=comment._id %>?_method=DELETE"
                                             method="POST">
-                                            <button type="submit" class="btn text-left">Delete</button>
+                                            <button type="submit" class="no_outline">Delete</button>
                                         </form>
 
 
@@ -95,6 +101,7 @@
 
                             <% }) %>
                         </div>
+                    <% } %> 
                     </div>
                     <% let flag=0;
                     post.comments.forEach((comment)=>{
@@ -112,7 +119,7 @@
                             <div class="form-group">
                                 <input name="comment[text]" id="desc" class="comment_section"
                                     placeholder="Write a comment..." required>
-                                <p class="small">Press Enter to post</p>
+                                <p class="small ml-2">Press Enter to post</p>
                             </div>
                         </form>
                     </div>

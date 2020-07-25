@@ -9,9 +9,11 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
+
 a:hover {
     text-decoration: none;
 }
+
 .navbar {
     border-bottom: 1px solid slategray;
     background-color: #3b5998;
@@ -59,13 +61,13 @@ a:hover {
     display: inline-block;
     margin: 4px 2px;
     cursor: pointer;
-    color: #fff!important;
+    color: #fff !important;
     font-weight: bolder;
-    
+
 }
 
 .user:hover {
-    color: #000!important;
+    color: #000 !important;
     background-color: #ddd;
 }
 
@@ -73,15 +75,17 @@ a:hover {
     margin: 5px;
     margin-right: 10px;
 }
-.icons{
+
+.icons {
     border: none;
     padding: 10px 20px;
     text-decoration: none;
     display: inline-block;
     margin: 4px 2px;
     cursor: pointer;
-    color: #fff!important;
+    color: #fff !important;
 }
+
 .icons:hover {
     background-color: #4267B2;
     cursor: pointer;
@@ -101,13 +105,16 @@ a:hover {
     background-color: #f5f5f5;
     font-weight: bolder;
 }
-.create_post:hover{
-    background-color:#ddd;
+
+.create_post:hover {
+    background-color: #ddd;
 }
-.card-title{
+
+.card-title {
     color: #4267B2;
 }
-.comment_section{
+
+.comment_section {
     width: 100%;
     border: none;
     outline: none;
@@ -121,7 +128,13 @@ a:hover {
 
 }
 
-.hover:hover{
+.hover:hover {
     cursor: pointer;
 }
-
+.no_outline{
+    background: transparent;
+    border-width: 0px;
+}
+.no_outline:focus{
+    outline: 0px;
+}
