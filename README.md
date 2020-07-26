@@ -6,6 +6,7 @@ This is a web app which is made for education purposes only. Currently it contai
 - Posts
 - Post liking
 - Comments
+- Friending
 
 More features will be updated shortly...
 ## Technical Stack
