@@ -1,15 +1,13 @@
 <%- include('../partials/header') %>
 <div class="container col-lg-8 ">
     <div class="text-center">
-    <h3 ><%=user.firstname  %> <%= user.lastname %> </h3>
-    <p class="text-dark"><%=user.bio  %> </p>
-</div>
+        <h3><%=user.firstname  %> <%= user.lastname %> </h3>
+        <p class="text-dark"><%=user.bio  %> </p>
+    </div>
     <hr>
-    
-
     <div class="row">
         <div class="col-md-5 mb-2">
-            <div class="card" style="border-radius: 10px;">
+            <div class="card mb-2" style="border-radius: 10px;">
                 <div class="card-body">
                     <h5 class="card-title">Intro</h5>
                 </div>
@@ -23,13 +21,47 @@
                     <li class="list-group-item"><i class="fa fa-phone fa-lg" aria-hidden="true"></i><span class="ml-2">
                             <%= user.contact  %> </span></li>
                 </ul>
-                <% if (currentUser && currentUser.username==user.username) {%> 
+                <% if (currentUser && currentUser.username==user.username) {%>
                 <div class="card-body text-center">
-                    <a href="/profile/<%=user._id  %>/edit" class="btn btn-secondary btn-block"><i class="fa fa-pencil " aria-hidden="true"></i> Edit Profile </a><br>
+                    <a href="/profile/<%=user._id  %>/edit" class="btn btn-secondary btn-block"><i class="fa fa-pencil "
+                            aria-hidden="true"></i> Edit Profile </a><br>
                 </div>
-            <% } %> 
+                <% } %>
             </div>
+
+            <div class="card" style="border-radius: 10px;">
+                <div class="card-body">
+                    <h5 class="card-title">Friends</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <% if (user.friends.length==0){  %>
+                    <li class="list-group-item text-center text-muted">No friends yet</li>
+                    <% }else{ %>
+                    <% user.friends.forEach((friend)=>{ %>
+                    <% let friendinfo=users.find(event=>event._id==friend) %>
+                    <li class="list-group-item">
+                        <div class="row col-12">
+                            <a href="/profile/<%=friendinfo._id %>"
+                                class="text-dark font-weight-bold"><%= friendinfo.username %></a>
+                            <% if (currentUser && user._id.equals(currentUser._id)){ %>
+                            <form action="/friends/<%=friendinfo._id %>/removefriend?_method=PUT" method="POST"
+                                class="ml-auto">
+                                <button class="btn btn-info btn-sm button_color" type="submit"><i
+                                        class="fa fa-user-plus"></i>
+                                    Remove Friend</button>
+                            </form>
+                            <% } %>
+                        </div>
+                    </li>
+
+                    <% }) %>
+                    <% } %>
+                </ul>
+            </div>
+
         </div>
+
+
         <div class="col-md-7">
             <% if (currentUser && currentUser.username==user.username) {%>
             <div class="mb-2">
@@ -42,7 +74,7 @@
                     </div>
                 </div>
             </div>
-        <% }  %> 
+            <% }  %>
             <div class="mb-2">
                 <div class="card" style="border-radius: 10px;">
                     <div class="card-body">
@@ -60,8 +92,8 @@
                             <small class="text-muted ml-auto"><%=post.created.toDateString() %> </small>
                             <% if (currentUser && post.author.id.equals(currentUser._id)) {%>
                             <div class="dropdown">
-                                <a class="no_outline" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
+                                <a class="no_outline" href="#" role="button" id="dropdownMenuLink"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <img src="/assets/ellipsis.png" height="20px">
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -75,33 +107,36 @@
                                 </div>
 
                             </div>
-                        <% } %> 
+                            <% } %>
                         </div>
 
                         <p class="card-text"><%= post.description %></p>
 
                         <hr class="mb-1">
                         <div class="row col-12">
-                             <form action="/posts/<%=post._id%>/like?_method=PUT" method="POST">
+                            <form action="/posts/<%=post._id%>/like?_method=PUT" method="POST">
                                 <% if (post.likes.find(o => o==currentUser._id)){ %>
                                 <button type="submit" class="no_outline" type="button">
-                                    <img src="/assets/like-1.png" height="20px"><span class="ml-1"><%=post.likes.length  %></span>
+                                    <img src="/assets/like-1.png" height="20px"><span
+                                        class="ml-1"><%=post.likes.length  %></span>
                                 </button>
                                 <% } else{ %>
                                 <button type="submit" class="no_outline" type="button">
-                                    <img src="/assets/like.png" height="20px"><span class="ml-1"><%=post.likes.length  %></span>
+                                    <img src="/assets/like.png" height="20px"><span
+                                        class="ml-1"><%=post.likes.length  %></span>
                                 </button>
                                 <% } %>
                             </form>
                             <a class="ml-auto" data-toggle="collapse" href="#post<%=post._id  %>" role="button"
-                                aria-expanded="false" aria-controls="collapseExample"><%=post.comments.length %> Comments</a>
+                                aria-expanded="false" aria-controls="collapseExample"><%=post.comments.length %>
+                                Comments</a>
                         </div>
                         <hr class="mt-1">
                         <div class="collapse" id="post<%=post._id  %>">
-                            <% if (post.comments.length==0){ %> 
-                                <div class="card-body comment_section">
-                                    <p class="card-text text-center text-dark">No comments yet :(</p>
-                                </div>
+                            <% if (post.comments.length==0){ %>
+                            <div class="card-body comment_section">
+                                <p class="card-text text-center text-muted">No comments yet</p>
+                            </div>
                             <% } else { %>
                             <div class="card-body comment_section">
                                 <% post.comments.forEach((comment)=>{ %>
@@ -135,7 +170,7 @@
 
                                 <% }) %>
                             </div>
-                        <% } %> 
+                            <% } %>
                         </div>
                         <% let flag=0;
                             post.comments.forEach((comment)=>{
@@ -163,6 +198,7 @@
                 </div>
                 <% } %>
                 <% }) %>
+
             </div>
         </div>
     </div>

@@ -13,15 +13,24 @@ route.get("/", middleWare.isLoggedIn, (req, res) => {
         if (err) {
             console.log("error occured")
         } else {
-            user.findById(user_id, (err, user) => {
-                if (err || !user) {
+            user.findById(user_id, (err, User) => {
+                if (err || !User) {
                     req.flash('error', 'User not found')
                     res.redirect("/posts");
                 } else {
-                    res.render('user/profile', {
-                        posts: posts,
-                        user: user
+                    user.find({}, (err, users) => {
+                        if (err) {
+                            console.log(err)
+                            res.redirect("/posts")
+                        } else {
+                            res.render('user/profile', {
+                                posts: posts,
+                                user: User,
+                                users:users
+                            })
+                        }
                     })
+                   
                 }
             })
 

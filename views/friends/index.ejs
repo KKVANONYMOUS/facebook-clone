@@ -5,7 +5,10 @@
             <h5 class="card-header text-left" style="background-color: #fff;">Friend Requests</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <%  currentUser.friend_requests.forEach((friend_request)=>{  %>
+                    <% if (currentUser.friend_requests.length==0){ %> 
+                        <div class="card-text text-center text-muted">No friend requests yet</div>
+                    <% } else {%> 
+                    <%  currentUser.friend_requests.forEach((friend_request)=>{  %> 
                     <% let friend=users.find(event=>event._id==friend_request) %>
 
                     <div class="card" style="border:none;">
@@ -27,6 +30,7 @@
                     <hr>
 
                     <% }) %>
+                <% } %> 
                 </div>
             </div>
         </div>
@@ -75,6 +79,9 @@
             <h5 class="card-header text-left" style="background-color: #fff;">Friends</h5>
             <div class="card-body">
                 <div class="card-body">
+                    <% if (currentUser.friends.length==0){  %> 
+                        <div class="card-text text-center text-muted">No friends yet</div>
+                    <% }else{ %> 
                     <%  currentUser.friends.forEach((friend)=>{  %>
                     <% let friendinfo=users.find(event=>event._id==friend) %>
                     <div class="card" style="border:none;">
@@ -95,6 +102,7 @@
                     </div>
                     <hr>
                     <% }) %>
+                <% } %> 
                 </div>
             </div>
         </div>

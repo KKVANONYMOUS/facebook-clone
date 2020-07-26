@@ -20,7 +20,7 @@ route.get("/friends", middleWare.isLoggedIn, (req, res) => {
 })
 
 //PUT ROUTE TO ADD FRIEND
-route.put("/friends/:id/addfriend", (req, res) => {
+route.put("/friends/:id/addfriend",middleWare.isLoggedIn, (req, res) => {
     user.findById(req.params.id, (err, foundUser) => {
         if (err || !foundUser) {
             req.flash("error", "User not found")
@@ -41,7 +41,7 @@ route.put("/friends/:id/addfriend", (req, res) => {
 })
 
 //PUT ROUTE TO DELETE FRIEND REQUEST
-route.put("/friends/:id/removefriendrequest", (req, res) => {
+route.put("/friends/:id/removefriendrequest",middleWare.isLoggedIn, (req, res) => {
     user.findById(req.params.id, (err, foundUser) => {
         if (err || !foundUser) {
             req.flash("error", "User not found")
@@ -62,7 +62,7 @@ route.put("/friends/:id/removefriendrequest", (req, res) => {
 })
 
 //PUT ROUTE TO ACCEPT FRIEND REQUEST
-route.put("/friends/:id/acceptfriendrequest", (req, res) => {
+route.put("/friends/:id/acceptfriendrequest",middleWare.isLoggedIn, (req, res) => {
     user.findById(req.params.id, (err, senderUser) => {
         if (err || !senderUser) {
             req.flash("error", "User not found")
@@ -94,7 +94,7 @@ route.put("/friends/:id/acceptfriendrequest", (req, res) => {
 })
 
 //PUT ROUTE TO REMOVE FRIEND 
-route.put("/friends/:id/removefriend", (req, res) => {
+route.put("/friends/:id/removefriend",middleWare.isLoggedIn, (req, res) => {
     user.findById(req.params.id, (err, friend) => {
         if (err || !friend) {
             req.flash("error", "User not found")
