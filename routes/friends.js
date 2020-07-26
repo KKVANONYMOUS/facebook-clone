@@ -63,18 +63,29 @@ route.put("/friends/:id/removefriendrequest", (req, res) => {
 
 //PUT ROUTE TO ACCEPT FRIEND REQUEST
 route.put("/friends/:id/acceptfriendrequest", (req, res) => {
-    user.findById(req.params.id, (err, foundUser) => {
-        if (err || !foundUser) {
+    user.findById(req.params.id, (err, senderUser) => {
+        if (err || !senderUser) {
             req.flash("error", "User not found")
             res.redirect("/friends")
         } else {
-            user.findByIdAndUpdate(foundUser._id, {
-                friends: foundUser.friends.concat([req.user._id])
+            user.findByIdAndUpdate(senderUser._id, {
+                friends: senderUser.friends.concat([req.user._id])
             }, (err, friend) => {
                 if (err) {
                     res.redirect("back")
                 } else {
-                    res.redirect("back")
+                    user.findByIdAndUpdate(req.user._id, {
+                        friends: req.user.friends.concat([senderUser._id]),
+                        friend_requests:req.user.friend_requests.filter((val => val != senderUser._id))
+                    }, (err, recipientUser) => {
+                        if (err){
+                            req.flash("error", "User not found")
+                            res.redirect("/friends")
+                        }
+                        else{
+                            res.redirect("back")
+                        }
+                    })
                 }
             })
 
@@ -84,21 +95,31 @@ route.put("/friends/:id/acceptfriendrequest", (req, res) => {
 
 //PUT ROUTE TO REMOVE FRIEND 
 route.put("/friends/:id/removefriend", (req, res) => {
-    user.findById(req.params.id, (err, foundUser) => {
-        if (err || !foundUser) {
+    user.findById(req.params.id, (err, friend) => {
+        if (err || !friend) {
             req.flash("error", "User not found")
             res.redirect("/friends")
         } else {
-            let updatedfriends = foundUser.friends.filter((val => val != req.user._id));
-            user.findByIdAndUpdate(foundUser._id, {
-                friends: updatedfriends
+            user.findByIdAndUpdate(friend._id, {
+                friends: friend.friends.filter((val => val != req.user._id))
             }, (err, friend) => {
                 if (err) {
                     res.redirect("back")
                 } else {
-                    res.redirect("back")
+                    user.findByIdAndUpdate(req.user._id, {
+                        friends: req.user.friends.filter((val => val != req.params.id))
+                    }, (err, recipientUser) => {
+                        if (err){
+                            req.flash("error", "User not found")
+                            res.redirect("/friends")
+                        }
+                        else{
+                            res.redirect("back")
+                        }
+                    })
                 }
             })
+
         }
     })
 })
