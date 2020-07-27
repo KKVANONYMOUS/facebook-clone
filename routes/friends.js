@@ -41,13 +41,13 @@ route.put("/friends/:id/addfriend",middleWare.isLoggedIn, (req, res) => {
 })
 
 //PUT ROUTE TO DELETE FRIEND REQUEST
-route.put("/friends/:id/removefriendrequest",middleWare.isLoggedIn, (req, res) => {
-    user.findById(req.params.id, (err, foundUser) => {
+route.put("/friends/:firstid/removefriendrequest/:secondid",middleWare.isLoggedIn, (req, res) => {
+    user.findById(req.params.firstid, (err, foundUser) => {
         if (err || !foundUser) {
             req.flash("error", "User not found")
             res.redirect("/friends")
         } else {
-            let updatedfriendrequests = foundUser.friend_requests.filter((val => val != req.user._id));
+            let updatedfriendrequests = foundUser.friend_requests.filter((val => val != req.params.secondid));
             user.findByIdAndUpdate(foundUser._id, {
                 friend_requests: updatedfriendrequests
             }, (err, friend) => {

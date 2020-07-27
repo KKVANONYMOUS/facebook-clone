@@ -5,6 +5,24 @@
         <p class="text-dark"><%=user.bio  %> </p>
     </div>
     <hr>
+    <% if (currentUser && !(user._id.equals(currentUser._id)) && !(currentUser.friends.find(friend=>friend==user._id))){ %>
+        <% if (user.friend_requests.find(event=>event==currentUser._id)){ %> 
+            <div class="text-right mb-2">
+                <form action="/friends/<%=user._id %>/removefriendrequest?_method=PUT" method="POST"
+                    class="ml-auto">
+                    <button class="btn btn-info btn-sm button_color" type="submit"> Remove
+                        Friend Request</button>
+                </form>
+            </div>
+        <% }else if(!(user.friend_requests.find(event=>event==currentUser._id))){ %> 
+    <div class="text-right mb-2">
+        <form action="/friends/<%=user._id %>/addfriend?_method=PUT" method="POST" class="ml-auto">
+            <button class="btn btn-info btn-sm button_color" type="submit"><i class="fa fa-user-plus"></i> Add
+                Friend</button>
+        </form>
+    </div>
+    <% } %>
+<% } %> 
     <div class="row">
         <div class="col-md-5 mb-2">
             <div class="card mb-2" style="border-radius: 10px;">
@@ -46,9 +64,8 @@
                             <% if (currentUser && user._id.equals(currentUser._id)){ %>
                             <form action="/friends/<%=friendinfo._id %>/removefriend?_method=PUT" method="POST"
                                 class="ml-auto">
-                                <button class="btn btn-info btn-sm button_color" type="submit"><i
-                                        class="fa fa-user-plus"></i>
-                                    Remove Friend</button>
+                                <button class="btn btn-info btn-sm button_color" type="submit">
+                                    Unfriend</button>
                             </form>
                             <% } %>
                         </div>

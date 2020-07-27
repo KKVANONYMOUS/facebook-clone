@@ -1,14 +1,14 @@
 <%- include('../partials/header') %>
 <div class="container col-lg-8">
     <div class=" mb-2">
-        <div class="card">
+        <div class="card p-2">
             <h5 class="card-header text-left" style="background-color: #fff;">Friend Requests</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <% if (currentUser.friend_requests.length==0){ %> 
-                        <div class="card-text text-center text-muted">No friend requests yet</div>
-                    <% } else {%> 
-                    <%  currentUser.friend_requests.forEach((friend_request)=>{  %> 
+                    <% if (currentUser.friend_requests.length==0){ %>
+                    <div class="card-text text-center text-muted">No friend requests yet</div>
+                    <% } else {%>
+                    <%  currentUser.friend_requests.forEach((friend_request)=>{  %>
                     <% let friend=users.find(event=>event._id==friend_request) %>
 
                     <div class="card" style="border:none;">
@@ -17,12 +17,19 @@
                                 <a href="/profile/<%=friend_request  %>">
                                     <h5 class="card-title ml-2"><%=friend.username  %> </h5>
                                 </a>
-                                <form action="/friends/<%=friend._id %>/acceptfriendrequest?_method=PUT" method="POST"
-                                    class="ml-auto">
-                                    <button class="btn btn-info btn-sm button_color" type="submit"><i
-                                            class="fa fa-user-plus"></i>
-                                        Accept Request</button>
-                                </form>
+                                <div class="row ml-auto">
+                                    <form action="/friends/<%=friend._id %>/acceptfriendrequest?_method=PUT"
+                                        method="POST" class="mr-2 mb-2">
+                                        <button class="btn btn-info btn-sm button_color" type="submit">
+                                            Confirm</button>
+                                    </form>
+                                    <form
+                                        action="/friends/<%=currentUser._id %>/removefriendrequest/<%=friend._id %>?_method=PUT"
+                                        method="POST">
+                                        <button class="btn btn-info btn-sm button_color" type="submit">
+                                            Delete</button>
+                                    </form>
+                                </div>
                             </div>
 
                         </div>
@@ -30,13 +37,13 @@
                     <hr>
 
                     <% }) %>
-                <% } %> 
+                    <% } %>
                 </div>
             </div>
         </div>
     </div>
-    <div class=" mb-2">
-        <div class="card">
+    <div class="mb-2">
+        <div class="card p-2">
             <h5 class="card-header text-left" style="background-color: #fff;">People You May know</h5>
             <div class="card-body">
                 <%  users.forEach((user)=>{  %>
@@ -49,10 +56,10 @@
                             </a>
 
                             <% if (user.friend_requests.find(event=>event==currentUser._id)){  %>
-                            <form action="/friends/<%=user._id %>/removefriendrequest?_method=PUT" method="POST"
-                                class="ml-auto">
-                                <button class="btn btn-info btn-sm button_color" type="submit"><i
-                                        class="fa fa-user-plus"></i> Remove
+                            <form
+                                action="/friends/<%=user._id %>/removefriendrequest/<%=currentUser._id  %>?_method=PUT"
+                                method="POST" class="ml-auto">
+                                <button class="btn btn-info btn-sm button_color" type="submit"> Remove
                                     Friend Request</button>
                             </form>
                             <% }else{ %>
@@ -79,9 +86,9 @@
             <h5 class="card-header text-left" style="background-color: #fff;">Friends</h5>
             <div class="card-body">
                 <div class="card-body">
-                    <% if (currentUser.friends.length==0){  %> 
-                        <div class="card-text text-center text-muted">No friends yet</div>
-                    <% }else{ %> 
+                    <% if (currentUser.friends.length==0){  %>
+                    <div class="card-text text-center text-muted">No friends yet</div>
+                    <% }else{ %>
                     <%  currentUser.friends.forEach((friend)=>{  %>
                     <% let friendinfo=users.find(event=>event._id==friend) %>
                     <div class="card" style="border:none;">
@@ -92,9 +99,8 @@
                                 </a>
                                 <form action="/friends/<%=friend %>/removefriend?_method=PUT" method="POST"
                                     class="ml-auto">
-                                    <button class="btn btn-info btn-sm button_color" type="submit"><i
-                                            class="fa fa-user-plus"></i>
-                                        Remove Friend</button>
+                                    <button class="btn btn-info btn-sm button_color" type="submit">
+                                         Unfriend</button>
                                 </form>
                             </div>
 
@@ -102,7 +108,7 @@
                     </div>
                     <hr>
                     <% }) %>
-                <% } %> 
+                    <% } %>
                 </div>
             </div>
         </div>
