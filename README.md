@@ -12,6 +12,6 @@ More features will be updated shortly...
 ## Technical Stack
 - NodeJS
 - ExpressJS
-- MongoDB
+- MongoDB (Atlas)
 - Mongoose
-### Currently the app is under development 
+
