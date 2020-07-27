@@ -15,7 +15,8 @@
 
             </div>
         </div>
-        <% posts.forEach((post)=>{  %> 
+        <% posts.forEach((post)=>{  %>
+        <% if (post.author.id.equals(currentUser._id)|| currentUser.friends.find(friend=>friend==post.author.id)){ %> 
         <div class="col-md-5 col-12 col-sm-4 col-lg-5 ">
             <div class="card mb-2">
                 <div class="card-body text-left">
@@ -128,7 +129,8 @@
                 </div>
             </div>
         </div>
-        <% }) %> 
+    <% }%>
+        <% }) %>
     </div>
 </center>
 

@@ -26,7 +26,7 @@ route.post("/register", (req, res) => {
             res.redirect("/register")
         } else {
             passport.authenticate("local")(req, res, () => {
-                req.flash('success', 'Welcome ' + user.username + " to Facebook")
+                req.flash('success', 'Welcome ' + user.username + " to Fakebook")
                 res.redirect('/posts')
             })
         }
