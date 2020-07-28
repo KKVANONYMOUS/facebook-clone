@@ -15,3 +15,5 @@ More features will be updated shortly...
 - MongoDB (Atlas)
 - Mongoose
 
+## Found a bug?
+This project is open for contributions. Feel free to open a pull request if you find a bug or want to add some new features
