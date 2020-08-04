@@ -142,3 +142,90 @@ a:hover {
     border-color:#4267B2!important  ;
     background-color:#4267B2!important ;
 }
+
+/* Global Chat css*/
+.chat_box {
+    height: 68vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px;
+    font-size: 12px;
+    margin-top: 32px;
+    width: 300px;
+    max-width: 70%;
+    position: relative;
+}
+
+.message h6 {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    color: #000;
+}
+
+.info_message {
+    background-color: #e9eafd;
+    border-radius: 10px;
+    color: #787986;
+    margin-bottom: 10px;
+    width: 300px;
+    max-width: 60%;
+    text-align: center;
+    padding: 4px;
+    font-size: 12px;
+}
+
+.right {
+    background-color: #00C6FF;
+    margin-left: auto;
+}
+
+.left {
+    background-color: #0078FF;
+    margin-right: auto;
+}
+
+.center {
+    margin: 10px auto;
+}
+
+.chat_box {
+    overflow-y: auto;
+}
+
+.users_list {
+    overflow-y: auto;
+}
+
+.input_div {
+    position: relative;
+}
+
+.msg_send_btn {
+    background: #05728f;
+    border: medium none;
+    outline:none!important;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 17px;
+    height: 33px;
+    position: absolute;
+    width: 33px;
+    right: 0;
+}
+
+#input_form {
+    display: flex;
+}
+
+.input_msg {
+    width: 95%;
+    border: 0;
+    outline: 0;
+}

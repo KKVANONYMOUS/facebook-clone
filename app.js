@@ -1,4 +1,4 @@
-let express = require("express"),
+const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   mongoose = require('mongoose'),
@@ -12,7 +12,10 @@ let express = require("express"),
   friendsRoutes = require('./routes/friends'),
   authRoutes = require('./routes/auth'),
   methodOverride = require("method-override"),
-  flash = require("connect-flash")
+  flash = require("connect-flash"),
+  http = require("http").createServer(app)
+
+const PORT = process.env.PORT || 3000;
 
 //App Config
 mongoose.connect('mongodb://localhost/facebook_clone', {
@@ -41,19 +44,44 @@ passport.deserializeUser(user.deserializeUser())
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
-  res.locals.error=req.flash('error');
-  res.locals.success=req.flash('success');
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
   next();
 })
 app.use(methodOverride("_method"))
 app.use("/posts", postsRoutes)
 app.use("/posts/:id/comments", commentsRoutes)
 app.use(authRoutes)
-app.use("/profile/:id",profileRoutes)
+app.use("/profile/:id", profileRoutes)
 app.use(likeRoutes)
 app.use(friendsRoutes)
 
+//Socket.io Config
+let io = require("socket.io")(http).of('/chats'),
+  users = {}
+io.on("connection", socket => {
+  socket.on("new-user-joined", name => {
+    users[socket.id] = name;
+    socket.emit("info-message", "Welcome to FakeBook Chat")
+    socket.broadcast.emit("user-joined", name)
+    io.emit("updateOnlineUsers",Object.values(users))
+  })
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("Starting app at PORT:3000")
+  socket.on("send-message", data => {
+    socket.broadcast.emit("receive-message", {
+            msg: data.msg,
+            name: users[socket.id]
+        })
+  })
+
+  socket.on("disconnect",()=>{
+    socket.broadcast.emit("user-left",`${users[socket.id]} has left the chat`)
+    delete users[socket.id]
+    io.emit("updateOnlineUsers",Object.values(users))
+  })
+
+})
+
+http.listen(PORT, () => {
+  console.log("Starting app at PORT:", PORT)
 })

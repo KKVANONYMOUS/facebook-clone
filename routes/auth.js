@@ -10,7 +10,9 @@ route.get("/", (req, res) => {
     res.redirect("/login")
 })
 
-
+route.get("/chats",middleWare.isLoggedIn,(req,res)=>{
+    res.render("chats",{user:req.user})
+})
 //REGISTER ROUTES
 route.get("/register", (req, res) => {
     res.render("register")
