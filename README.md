@@ -7,6 +7,7 @@ This is a web app which is made for education purposes only. Currently it contai
 - Post liking
 - Comments
 - Friending
+- Global Chat (currently not available in deployed version)
 
 More features will be updated shortly...
 ## Technical Stack
@@ -14,6 +15,7 @@ More features will be updated shortly...
 - ExpressJS
 - MongoDB (Atlas)
 - Mongoose
+- Socket.io
 
 ## Found a bug?
 This project is open for contributions. Feel free to open a pull request if you find a bug or want to add some new features
