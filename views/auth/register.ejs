@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+<div class="text-center">
+    <div class="form-signin" >
+        <form method="POST" action="/register">
+            <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" class="form-control" placeholder="Username" required autofocus
+                name="username">
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="password">
+            <button class="btn btn-lg btn-success btn-block mb-3" type="submit">Sign Up</button>
+            Existing user? <a href="/login" class="mr-2">Login</a> 
+        </form>
+    </div>
+</div>
+<%- include('../partials/footer') %>

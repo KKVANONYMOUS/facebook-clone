@@ -1,0 +1,119 @@
+<%- include('../partials/header') %>
+<% let username = user.username %>
+<div class="pl-3 pr-3 row ">
+    <div class="col-md-5 mb-2 users_section">
+        <div class="text-center">
+            <h3>Online Users</h3>
+        </div>
+        
+        <div class="users_list list-group" id="users_list">
+          
+        </div>
+    </div>
+    <div class="col-md-7" style="background-color: #fff;">
+        <div class="text-center ">
+            <h3 class="mt-1">Global Chat</h3>
+        </div>
+        <hr class="pt-0">
+        <div>
+            <div class="chat_box"></div>
+            <hr>
+            <div class="input_div pb-3">
+                <form id="input_form">
+                    <input type="text" class="input_msg" id="input_msg" placeholder="Type message" autofocus>
+                    <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o"
+                            aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer') %>
+<script>
+        const socket = io("/chats")
+    const username = "<%= username %>";
+    const chat_box = document.querySelector(".chat_box");
+    const input_form = document.getElementById("input_form");
+    const users_list=document.getElementById("users_list");
+    const receiveTone=new Audio("./assets/sounds/incoming.mp3");
+    const sendTone=new Audio("./assets/sounds/ping.mp3");
+
+    socket.emit("new-user-joined", username)
+
+    //displays the welcome message to the new user
+    socket.on("info-message", msg => {
+        appendinfoMessage(msg, 'center')
+    })
+
+    //displays the name of new user who joined the chat
+    socket.on('user-joined', username => {
+        appendinfoMessage(`${username} joined the chat`, 'center')
+    })
+
+    //when users leaves the chat
+    socket.on("user-left", msg => {
+        appendinfoMessage(msg, 'center')
+    })
+
+    //handling input from message box
+    input_form.addEventListener('submit', (e) => {
+        e.preventDefault()
+        const message = input_msg.value;
+        if (message) {
+            appendMessage({
+                msg: message,
+                name: username
+            }, 'right')
+            sendTone.play()
+            socket.emit('send-message', {
+                msg: message,
+                name: username
+            })
+            input_msg.value = ""
+            input_msg.focus();
+            chat_box.scrollTop = chat_box.scrollHeight;
+        }
+    })
+
+    //handling receiving of message
+    socket.on("receive-message", data => {
+        appendMessage(data, 'left')
+        receiveTone.play()
+    })
+
+    // updating online users
+    socket.on("updateOnlineUsers",data=>{
+        let string="";
+        for(let i=0;i<data.length;i++){
+            if (data[i]!=username){
+                string+=`<li class="list-group-item card-title font-weight-bold">${data[i]}</li>`;
+            }
+            
+        }
+        users_list.innerHTML=string;
+    })
+    // function to add info message
+    appendinfoMessage = (msg, position) => {
+        let divElement = document.createElement("div");
+        divElement.innerText = msg;
+        divElement.classList.add("info_message");
+        divElement.classList.add(position)
+        chat_box.append(divElement)
+
+    }
+
+    // function to add message
+    appendMessage = (data, position) => {
+        let divElement = document.createElement("div");
+        if (data.name == username) {
+            divElement.innerHTML =
+                `<h6 class="mr-1 ml-1"> You</h6>${data.msg}`;
+        } else {
+            divElement.innerHTML =
+                `<h6 class="mr-1 ml-1">${data.name}</h6>${data.msg}`;
+        }
+        divElement.classList.add("message");
+        divElement.classList.add(position)
+        chat_box.append(divElement)
+    }
+</script>

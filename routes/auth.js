@@ -2,7 +2,6 @@ let express = require("express"),
     route = express.Router(),
     user = require('../models/user'),
     passport = require('passport'),
-    post = require("../models/posts"),
     middleWare = require("../middleware")
 
 //DEFAULT ROUTE    
@@ -10,12 +9,14 @@ route.get("/", (req, res) => {
     res.redirect("/login")
 })
 
+//CHAT ROUTE
 route.get("/chats",middleWare.isLoggedIn,(req,res)=>{
-    res.render("chats",{user:req.user})
+    res.render("chats/chats",{user:req.user})
 })
+
 //REGISTER ROUTES
 route.get("/register", (req, res) => {
-    res.render("register")
+    res.render("auth/register")
 })
 
 route.post("/register", (req, res) => {
@@ -37,7 +38,7 @@ route.post("/register", (req, res) => {
 
 //LOGIN ROUTES
 route.get("/login", (req, res) => {
-    res.render("login")
+    res.render("auth/login")
 })
 route.post("/login", passport.authenticate("local", {
     successRedirect: "/posts",
