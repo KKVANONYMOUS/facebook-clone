@@ -17,5 +17,14 @@ More features will be updated shortly...
 - Mongoose
 - Socket.io
 
+## Screenshot
+<strong>Home Page: </strong>
+
+![home](https://user-images.githubusercontent.com/58628586/92297903-90e4c780-ef61-11ea-914d-24c49bdb92d5.png)
+
+<strong>Profile Page:</strong>
+
+![profile](https://user-images.githubusercontent.com/58628586/92297853-0d2adb00-ef61-11ea-9f3c-db250bb586a0.png)
+
 ## Found a bug?
 This project is open for contributions. Feel free to open a pull request if you find a bug or want to add some new features
