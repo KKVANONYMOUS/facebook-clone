@@ -17,7 +17,7 @@ More features will be updated shortly...
 - Mongoose
 - Socket.io
 
-## Screenshot
+## Screenshots
 <strong>Home Page: </strong>
 
 ![home](https://user-images.githubusercontent.com/58628586/92297903-90e4c780-ef61-11ea-914d-24c49bdb92d5.png)
