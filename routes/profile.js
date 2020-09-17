@@ -53,22 +53,7 @@ route.get("/edit", middleWare.checkLoggedInUser, (req, res) => {
 
 //PUT ROUTE FOR EDITING PROFILE
 route.put("/", middleWare.checkLoggedInUser, (req, res) => {
-    let firstname = req.body.firstname
-    let lastname = req.body.lastname
-    let bio = req.body.bio
-    let hometown = req.body.hometown
-    let workplace = req.body.workplace
-    let education = req.body.education
-    let contact = req.body.contact
-    user.findByIdAndUpdate(req.params.id, {
-        firstname: firstname,
-        lastname: lastname,
-        bio: bio,
-        hometown: hometown,
-        workplace: workplace,
-        education: education,
-        contact: contact
-    }, (err, post) => {
+    user.findByIdAndUpdate(req.params.id, req.body.profile , (err, post) => {
         if (err) {
             console.log(err)
             res.redirect("/profile")
