@@ -8,31 +8,31 @@
             <form action="/profile/<%= currentUser._id  %>?_method=PUT" method="POST">
                 <div class="form-group">
                     <label for="fname">First Name</label>
-                    <input type="text" name="firstname" id="fname" class="form-control" value="<%=user.firstname  %>">
+                    <input type="text" name="profile[firstname]" id="fname" class="form-control" value="<%=user.firstname  %>">
                 </div>
                 <div class="form-group">
                     <label for="lname">Last Name</label>
-                    <input type="text" name="lastname" id="lname" class="form-control" value="<%=user.lastname  %> ">
+                    <input type="text" name="profile[lastname]" id="lname" class="form-control" value="<%=user.lastname  %> ">
                 </div>
                 <div class="form-group">
                     <label for="bio">Bio</label>
-                    <input type="text" name="bio" id="bio" class="form-control" value="<%=user.bio  %> ">
+                    <input type="text" name="profile[bio]" id="bio" class="form-control" value="<%=user.bio  %> ">
                 </div>
                 <div class="form-group">
                     <label for="hometown">Hometown</label>
-                    <input type="text" name="hometown" id="hometown" class="form-control" value="<%=user.hometown  %> ">
+                    <input type="text" name="profile[hometown]" id="hometown" class="form-control" value="<%=user.hometown  %> ">
                 </div>
                 <div class="form-group">
                     <label for="workplace">Workplace</label>
-                    <input type="text" name="workplace" id="workplace" class="form-control" value="<%=user.workplace  %> ">
+                    <input type="text" name="profile[workplace]" id="workplace" class="form-control" value="<%=user.workplace  %> ">
                 </div>
                 <div class="form-group">
                     <label for="education">Education</label>
-                    <input type="text" name="education" id="education" class="form-control" value="<%=user.education  %> ">
+                    <input type="text" name="profile[education]" id="education" class="form-control" value="<%=user.education  %> ">
                 </div>
                 <div class="form-group">
                     <label for="contact">Contact</label>
-                    <input type="tel" name="contact" id="contact" class="form-control" value="<%=user.contact  %> ">
+                    <input type="tel" name="profile[contact]" id="contact" class="form-control" value="<%=user.contact  %> ">
                 </div>
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
