@@ -7,7 +7,7 @@ This is a web app which is made for education purposes only. Currently it contai
 - Post liking
 - Comments
 - Friending
-- Global Chat (currently not available in deployed version)
+- Global Chat
 
 More features will be updated shortly...
 ## Technical Stack
@@ -20,11 +20,20 @@ More features will be updated shortly...
 ## Screenshots
 <strong>Home Page: </strong>
 
-![home](https://user-images.githubusercontent.com/58628586/92297903-90e4c780-ef61-11ea-914d-24c49bdb92d5.png)
+![home](https://user-images.githubusercontent.com/58628586/117667599-a67e5100-b1c2-11eb-8ad5-fdf819348262.png)
 
 <strong>Profile Page:</strong>
 
-![profile](https://user-images.githubusercontent.com/58628586/92297853-0d2adb00-ef61-11ea-9f3c-db250bb586a0.png)
+![profile](https://user-images.githubusercontent.com/58628586/117667605-a8481480-b1c2-11eb-946d-e9fbc820778c.png)
+
+<strong>Find Friends:</strong>
+
+![friend](https://user-images.githubusercontent.com/58628586/117667586-a41bf700-b1c2-11eb-84a2-72ab7a1fea6f.png)
+
+<strong>Global Chat:</strong>
+
+![chat](https://user-images.githubusercontent.com/58628586/117667579-a2523380-b1c2-11eb-8eb8-399cdcf631d5.png)
+
 
 ## Found a bug?
 This project is open for contributions. Feel free to open a pull request if you find a bug or want to add some new features
